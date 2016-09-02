@@ -1,7 +1,18 @@
 console.log('debug in the console of your index.html file');
 
 // define loop here
-
+var loop = function(collection, callback){
+	if (Array.isArray(collection) || typeof collection ==='string'){
+		for (var i=0; i<collection.length; i++){
+		callback(collection[i], i)
+	}
+	}
+	else if (typeof collection === 'object'){
+		for (var key in collection){
+			callback([key], key)
+		}
+	}
+};
 
 
 // buggy transform function
@@ -9,8 +20,8 @@ console.log('debug in the console of your index.html file');
 var transform = function(collection, callback){
     result = [];
 
-    loop(collection, function(index, element){
-        result.push(callback, element);
+    loop(collection, function(element, index){
+        result.push(callback(element, index));
     });
 
     return result;
@@ -24,7 +35,7 @@ var doubleNumbers = transform(numbers, function(elem){
     return elem * 2;
 }); // should return: [2, 4, 6, 8, 10];
 
-
+console.log (doubleNumbers);
 
 
 
